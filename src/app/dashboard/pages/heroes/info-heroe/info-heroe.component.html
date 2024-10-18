@@ -1,0 +1,34 @@
+<div class="text-xs font-bold mb-6 flex items-center space-x-2">
+  <!-- Icono de flecha para volver -->
+  <button (click)="goBack()" class=" text-blue-600 hover:text-blue-800">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+  <!-- Título de la página -->
+  <app-title [title]="titleLabel()" class="mt-5"/>
+</div>
+
+    @if (heroe()) {
+      <div class="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200">
+  <div class="bg-blue-600 p-4">
+    <h2 class="text-white text-lg font-bold">Ficha técnica</h2>
+  </div>
+  <div class="p-6">
+    <div class="mb-4">
+      <h3 class="text-gray-800 text-xl font-semibold">Nombre</h3>
+      <p class="text-gray-600">{{ heroe()?.name }}</p>
+    </div>
+    <div class="mb-4">
+      <h3 class="text-gray-800 text-xl font-semibold">Alter Ego</h3>
+      <p class="text-gray-600">{{ heroe()?.alterEgo }}</p>
+    </div>
+    <div>
+      <h3 class="text-gray-800 text-xl font-semibold">Super poderes</h3>
+      <p class="text-gray-600">{{ heroe()?.power }}</p>
+    </div>
+  </div>
+</div>
+}@else {
+    <p>Cargando información</p>
+    }

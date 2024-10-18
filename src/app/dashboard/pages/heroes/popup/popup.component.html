@@ -1,0 +1,60 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+  <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+    <div class="mt-3 text-center">
+      <h4 class="text-lg leading-6 font-medium text-gray-900">
+          {{ isEditMode ? 'Editar Héroe' : 'Añadir Héroe' }}
+      </h4>
+
+      <div class="mt-2 px-7 py-3">
+        <form [formGroup]="heroForm" (ngSubmit)="saveChanges()">
+          <input type="text" formControlName="name" placeholder="Nombre" appUppercase
+            class="mt-1 w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md
+            px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow">
+          <div *ngIf="heroForm.get('name')?.invalid && heroForm.get('name')?.touched">
+            <small class="text-red-500" *ngIf="heroForm.get('name')?.errors?.['required']">El nombre es obligatorio.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('name')?.errors?.['minlength']">El nombre debe tener al menos 6 caracteres.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('name')?.errors?.['pattern']">El nombre solo debe contener letras.</small>
+          </div>
+
+          <input type="text" formControlName="alterEgo" placeholder="Alter Ego"
+            class="mt-1 w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md
+            px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow">
+          <div *ngIf="heroForm.get('alterEgo')?.invalid && heroForm.get('alterEgo')?.touched">
+            <small class="text-red-500" *ngIf="heroForm.get('alterEgo')?.errors?.['required']">El Alter Ego es obligatorio.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('alterEgo')?.errors?.['minlength']">El Alter Ego debe tener al menos 6 caracteres.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('alterEgo')?.errors?.['pattern']">El Alter Ego solo debe contener letras.</small>
+          </div>
+
+          <input type="text" formControlName="power" placeholder="Super poderes"
+            class="mt-1 w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md
+            px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow">
+          <div *ngIf="heroForm.get('power')?.invalid && heroForm.get('power')?.touched">
+            <small class="text-red-500" *ngIf="heroForm.get('power')?.errors?.['required']">El poder es obligatorio.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('power')?.errors?.['minlength']">El poder debe tener al menos 6 caracteres.</small>
+            <small class="text-red-500" *ngIf="heroForm.get('power')?.errors?.['pattern']">El poder solo debe contener letras.</small>
+          </div>
+
+          <div class="items-center px-4 py-3">
+            <div class="flex justify-center">
+              <button type="button" (click)="closePopup()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4
+               rounded mr-2">
+                Cancelar
+              </button>
+              <button type="submit" [disabled]="heroForm.invalid" class="bg-blue-500 hover:bg-blue-600 text-white font-bold
+               py-2 px-4 rounded">
+                Guardar
+              </button>
+            </div>
+            <div class="absolute inset-0 flex justify-center items-center bg-gray-500 bg-opacity-50 transition-opacity duration-500 ease-out"
+            [class.opacity-0]="loadingHeroId !== false"
+            [class.opacity-200]="loadingHeroId === false"
+            *ngIf="loadingHeroId ===false"> <!-- Loader centrado encima -->
+              <div class="loader ease-linear rounded-full border-4 border-t-4 border-grey-200 h-5 w-5"></div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
