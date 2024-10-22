@@ -32,17 +32,32 @@ Ejecuta `ng test` para ejecutar las pruebas unitarias a través de [Karma](https
 Ejecuta `ng e2e` para ejecutar las pruebas end-to-end a través de una plataforma de tu elección. Para usar este comando, primero necesitas agregar un paquete que implemente las capacidades de prueba end-to-end.
 
 ## <u>Observaciones</u>
+
+### Componentes
+Se encuentran en la carpeta 
+*src/app/dashboard/pages*
+
+**heroes** muestra el *listado paginado* de heroes.
+También permite la *búsqueda* desde el input.
+
+**info-heroe** muestra la información del heroe filtrado por su id.
+
+**popup** sirve para *editar* un determinado heroe filtrado por el id o *agregar* uno nuevo, desde el botón *añadir*.
+### Services
+Se encuentran en la carpeta 
+*src/app/services/*
+
+**hero** es el servicio que contiene las llamadas a las APIs que nos permiten obtener, guardar, modificar y borrar los registros de los *heroes.*
+
+**url-config** es el servicio donde configuramos las URLs.
+
 ### Interceptores
-Agregue un interceptor para validar que en el listado de heroes al producirse un *error en la petición http*, se utilice una segunda URL.
-La primera URL la deje con un error para poder probarlo, los mismos se observan en la consola del código, donde se muestran los mensajes.
+Se encuentran en la carpeta 
+*src/app/shared/interceptors*
+Agregué un interceptor para validar que en el listado de heroes al producirse un **error en la petición http**, se utilice una segunda URL.
+La primera URL la dejé con un error para poder probarlo, los mismos se observan en la consola del código, donde se muestran los mensajes.
 ### Directivas
-Al crear o editar en la caja de texto del *nombre* del héroe, siempre se muestra en mayúscula.
+Se encuentran en la carpeta 
+*src/app/directives/*
 
-
-
-## Ayuda adicional
-
-Para obtener más ayuda sobre Angular CLI, usa `ng help` o consulta la página:  
-[Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
-
-
+Al crear o editar en la caja de texto del **nombre** del héroe, siempre se muestra en mayúscula.
