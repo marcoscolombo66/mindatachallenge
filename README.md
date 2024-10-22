@@ -25,7 +25,8 @@ Ejecuta `ng test` para ejecutar las pruebas unitarias a través de [Karma](https
 ### Resultados:
 ![Descripción de la imagen](test1.png)
 ![Descripción de la imagen](test2.png)
-[Reporte Coverage](https://marcoscolombo66.github.io/mindatachallenge/coverage/index.html).
+
+[Reporte coverage Completo](https://marcoscolombo66.github.io/mindatachallenge/coverage/index.html).
 ## Ejecución de pruebas end-to-end
 
 Ejecuta `ng e2e` para ejecutar las pruebas end-to-end a través de una plataforma de tu elección. Para usar este comando, primero necesitas agregar un paquete que implemente las capacidades de prueba end-to-end.
