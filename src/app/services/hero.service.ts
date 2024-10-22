@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Heroe } from '@interfaces/req-response';
 import { delay, map, tap } from 'rxjs';
-import { UrlConfigService } from './url-config.service';
+import { UrlConfigService } from '@services/url-config.service';
 
 interface State {
   heroes: Heroe[];
