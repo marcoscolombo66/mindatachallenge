@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import type { Heroe } from '@interfaces/req-response';
 import { delay, map, tap } from 'rxjs';
+import { UrlConfigService } from './url-config.service';
 
 interface State {
   heroes: Heroe[];
@@ -13,6 +14,7 @@ interface State {
 })
 export class HeroService {
   private http = inject(HttpClient);
+  private urlConfig = inject(UrlConfigService);
 
   #state = signal<State>({
     loading: true,
@@ -28,50 +30,48 @@ export class HeroService {
 
   private loadHeroes() {
     this.http
-      .get<Heroe[]>('https://670e892b3e7151861654f57d.mockapi.io/api/heroes')
+      .get<Heroe[]>(this.urlConfig.getBaseUrl())
       .pipe(delay(1500))
-      .subscribe((res) => {
-        this.#state.update((state) => ({
-          ...state,
-          loading: false,
-          heroes: res,
-        }));
+      .subscribe({
+        next: (res) => {
+          this.#state.update((state) => ({
+            ...state,
+            loading: false,
+            heroes: res,
+          }));
+        },
+        error: (error) => {
+          console.error('Error loading heroes:', error);
+          this.#state.update((state) => ({
+            ...state,
+            loading: false,
+          }));
+        },
       });
   }
 
   getHeroeById(id: string) {
-    return this.http
-      .get<Heroe>(
-        `https://670e892b3e7151861654f57d.mockapi.io/api/heroes/${id}`
-      )
-      .pipe(
-        delay(1500),
-        map((resp) => resp)
-      );
+    return this.http.get<Heroe>(`${this.urlConfig.getBaseUrl()}/${id}`).pipe(
+      delay(1500),
+      map((resp) => resp)
+    );
   }
 
   deleteHeroe(id: any) {
-    return this.http
-      .delete<Heroe>(
-        `https://670e892b3e7151861654f57d.mockapi.io/api/heroes/${id}`
-      )
-      .pipe(
-        delay(1500),
-        tap(() => {
-          this.#state.update((state) => ({
-            ...state,
-            heroes: state.heroes.filter((hero) => hero.id !== id),
-          }));
-        })
-      );
+    return this.http.delete<Heroe>(`${this.urlConfig.getBaseUrl()}/${id}`).pipe(
+      delay(1500),
+      tap(() => {
+        this.#state.update((state) => ({
+          ...state,
+          heroes: state.heroes.filter((hero) => hero.id !== id),
+        }));
+      })
+    );
   }
 
   editHero(id: any, updatedHero: Partial<Heroe>) {
     return this.http
-      .put<Heroe>(
-        `https://670e892b3e7151861654f57d.mockapi.io/api/heroes/${id}`,
-        updatedHero
-      )
+      .put<Heroe>(`${this.urlConfig.getBaseUrl()}/${id}`, updatedHero)
       .pipe(
         delay(1500),
         tap((updatedHero) => {
@@ -87,20 +87,15 @@ export class HeroService {
   }
 
   createHero(newHero: Partial<Heroe>) {
-    return this.http
-      .post<Heroe>(
-        `https://670e892b3e7151861654f57d.mockapi.io/api/heroes`,
-        newHero
-      )
-      .pipe(
-        delay(1500),
-        tap((createdHero) => {
-          this.#state.update((state) => ({
-            ...state,
-            heroes: [...state.heroes, createdHero], // Agregar el nuevo héroe a la lista
-          }));
-        }),
-        map((resp) => resp)
-      );
+    return this.http.post<Heroe>(this.urlConfig.getBaseUrl(), newHero).pipe(
+      delay(1500),
+      tap((createdHero) => {
+        this.#state.update((state) => ({
+          ...state,
+          heroes: [...state.heroes, createdHero],
+        }));
+      }),
+      map((resp) => resp)
+    );
   }
 }
